@@ -1,0 +1,299 @@
+\documentclass[conference]{IEEEtran}
+\IEEEoverridecommandlockouts
+% The preceding line is only needed to identify funding in the first footnote. If that is unneeded, please comment it out.
+\usepackage{cite}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{algorithmic}
+\usepackage{graphicx}
+\usepackage{textcomp}
+\usepackage{xcolor}
+\def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
+    T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
+
+
+
+
+    
+\begin{document}
+
+\title{Computer Vision Based Waste Classification and Management System\\
+
+{\footnotesize \textsuperscript{}}
+\thanks{$^*$Corresponding Author's (Muhammad Aminur Rahaman) email: aminur@cse.green.edu.bd\\979-8-3315-2976-5/24/\$31.00 © 2024 IEEE}
+}
+
+    
+
+\author{\IEEEauthorblockN{Md Fahim Shahriar, Samira Jahan Shammi, Md Shammir Ahmed, and Muhammad Aminur Rahaman$^*$}
+\IEEEauthorblockA{\textit{Department of Computer Science and Engineering} \\
+\textit{Green University of Bangladesh}\\
+Purbachal American City, Kanchan, Rupganj,
+Narayanganj-1461, Dhaka, Bangladesh \\
+shahriareasif43@gmail.com, samirashammi67@gmail.com, mdshammirahmedanik@gmail.com, aminur@cse.green.edu.bd}
+}
+
+
+\maketitle 
+
+\begin{abstract}
+Different type of garbage disposal is becoming a major issue in metropolitan areas. To dispose the garbage, land-filling is used generally which is inefficient, costly, and it pollutes the environment. In order to avoid dangerous exposure to contaminated waste, this article has proposed a computer vision-based waste classification system which will make the waste separation process quicker and more intelligent, possibly even without or with reduced human participation.  The proposed system collects waste images from a camera, performs object recognition module to detect wastes, and categorizes the detected waste materials into 8 classes (Plastic, paper, glass, metal, battery, organic, cloth, and e-wast). After classifying the wast, the system feeds the wastes into recyclable and non-recyclable bins. We have used improved VGG19 model for the system training and testing.  A total of
+16,830 images are used of 8 classes image maintaining 80:20 training and testing ratio achieving the accuracy 97.75\% for the proposed improved VGG19 where as basic VGG19 achieves 87.40\% accuracy. 
+
+\end{abstract}
+
+\begin{IEEEkeywords}
+Waste Classification, VGG16, VGG19, Deep Learning, and Waste Management.
+\end{IEEEkeywords}
+
+\section{Introduction}
+
+Despite the fact that there are many different recycling categories, many people are still confused or unable to decide which trash can is best for a given form of waste. It is generally believed that waste management and careful sorting play a significant role in the global improvement of the environment. By recycling and repurposing abandoned goods, society can lessen pollution and lessen environmental problems.
+
+Solid trash disposal is becoming a major issue in metropolitan areas, and solid garbage comprises paper, wood, plastic, and other materials. Metal, glass, and so forth. Landfilling is the most common form of waste management, although it is inefficient, costly, and pollutes the environment. For example, the dump site can have negative impact on the health of those who live nearby. Another popular form of garbage management is to burn it, which can result in air pollution and the transmission of dangerous waste compounds into the air, which can cause cancer. To safeguard the environment and human health, it is thus vital to recycle garbage, and we must divide waste into distinct components that may be recycled in various ways.\vspace{1mm}\\According to a World Bank research, the world produces almost 4 billion tons of rubbish each year, with urban waste accounting for a large portion of this; waste is expected to rise by 70\% by 2025.The amount of garbage in less developed countries will skyrocket in the next 25 years \cite{b1}.
+Plastic, metal, glass, and organic/bio waste are some of the categories used to categorize garbage. Techniques and processes for waste \cite{b2} segregation are used for key groupings of materials such as paper, glass, metal, wood, and plastic. Separating distinct sorts of materials in a particular group, on the other hand, is the most difficult task. Sorting different types of glass or polymers into distinct hues. The use of computer vision techniques, particularly picture recognition, is one of the options. Plastic components make up the majority of household garbage, with the following four categories dominating: PET (polyethylene terephthalate), HDPE (high-density polyethylene), and LDPE (low-density polyethylene). PS stands for polystyrene while PP stands for polypropylene.
+
+The goal of waste management is to collect and dispose of garbage across the world in order to maintain the environment safe and clean. Almost a third of garbage is organic waste, which is composted and turned into fertile soil. The actions necessary to decompose trash quickly are essential for proper garbage disposal. Increased recycling rates and a decrease in the amount of organic waste disposed of in landfills. In this paper, we have focused on to design and develop a robust algorithm for recognizing different type of waste for recycling them. We have tried to appropriately categorize various waste kinds into several groups in order to increase the overall accuracy of the waste management process. We have tried to classify different types of waste from low quality images using our own dataset.
+
+We have outlined the rest of the paper as like as the Section II describes the background study of the research, The proposed methodology is described in the Section III. Section IV describes the result analysis and the paper is concluded in the Section V.
+
+ \section{Literature Review}
+A study was performed by Xiujie Xu, Xuehai Qi, and Xingjian Diao,``Reach on Waste Classification and Identification by Transfer Learning and Lightweight Neural Network” \cite{b4}. The present trash classification algorithms perform poorly on smart terminal devices due to inadequate garbage datasets and poor performance of complicated network models. The result is unsatisfactory. \cite{b14} A trash categorization and identification system based on transfer learning and lightweight neural networks is presented in this research. The lightweight neural network MobileNetV2 is migrated and rebuilt, and the reconstructed network is utilized for feature extraction, with the retrieved features being injected into the SVM to accomplish the detection of six different categories of rubbish.\vspace{1mm}\\
+Using 2527 pieces of rubbish labeled data from the TrashNet dataset, the model was trained and confirmed. Their technique has a classification accuracy of 98.4 percent, demonstrating that it may successfully enhance classification accuracy and time while also overcoming the problem of insufficient data and less labeling.\vspace{1mm}\\
+The authors of \cite{b5} propose an automation system based on “Automation of Waste Sorting with Deep Learning”. They present a hierarchical deep learning strategy for detecting and classifying trash in food trays in this research. The suggested two-step method preserves the benefits of modern object detectors (such as Faster R-CNN) while allowing the classification job to be handled in higher resolution bounding boxes. \cite{b15}They also collect, label, and make available to the scientific community a new dataset for study and benchmarking called Labeled Waste in the Wild. The suggested hierarchical model outperforms typical deep learning algorithms in terms of detection and classification in experiments.\vspace{1mm}\\
+Faster-RCNN was employed in the tests, and 800 pictures from the LWW dataset were used for training, with 100 epochs lasting 40 hours, and 200 photos for testing. They used a faster R-CNN model that was trained in 19 original courses and had a 74.1\%mAP. They work with LWW dataset which has a low level performance.The author here \cite{b1} proposes the method of ResNet-50 and SVM. They propose an intelligent waste material classification system that is built using a 50-layer residual net pre-train (ResNet-50) \cite{b2} Convolutional Neural Network model as the extractor and a Support Vector Machine (SVM) to classify waste into different groups/types such as glass, metal, paper, and plastic.\vspace{1mm}\\
+The suggested approach is evaluated using Gary Thung and Mindy Yang's garbage picture collection, and it achieves an accuracy of 87\%. In order to distinguish between SVMs with scale-invariant feature transform (SIFT) \cite{b7} and an eleven-layer CNN design, such as AlexNet \cite{b8}, Mindy Yang et al. \cite{b9} conducted a comparison study. The outcome reveals that the SVM defeats CNN. The degree of accuracy was 63\%.\vspace{1mm}\\
+In order to perform effective waste sorting, this paper compared the studies of deep learning convolution neural networks and SVM machine learning algorithms \cite{b10}. SVM's accuracy rate was almost higher than CNN's. However, as data and GPU usage increased, the CNN algorithm produced results that were more accurate and had less overfitting. The SVM model was run in order to classify data for the hardware's final execution.\vspace{1mm}\\
+The author of \cite{b12} aimed to build an automatic computer vision based medical waste separator that detects the presence of medical waste and categorizes them into one of the four categories namely gloves, mask, syringe and cotton.  To train a model that classifies medical waste, an embedded system employs transfer learning on the AlexNet deep learning network. The technology is set up to detect the movement of the input bin's lid and then take a picture of the trash object that has been dumped into the bin. This picture is then loaded into their trained model, which correctly classifies the item with an accuracy of 86.17\%. They didn’t build any algorithm for detecting and their process is very complex.
+
+
+
+\section{Proposed Methodology}
+Fig.\ref{fig:GrabageCollection} represents the waste classification process where the initial stage in picture recognition is image preprocessing. It’s the crucial connection between picture preprocessing and image quality preservation. 
+
+\begin{figure}[htb]
+  \centering
+    \includegraphics[width=9cm,height=1.5cm]
+    {Screenshot_126.png}
+    \caption{Garbage classification process}
+	\label{fig:GrabageCollection}
+\end{figure}\\
+
+Proposed model has a direct influence on feature extraction \cite{b3}, categorization, and recognition. To ensure smooth and fast follow-up work, it is also important to do picture grayscale, histogram equalization, image filtering, size normalization, and other preparation work for the trash image after applying the classification detection technique to get the fundamental region of the image.
+
+The following subsections provide more information about the suggested methodology.
+
+\subsection{Data Collection}
+Online repositories, offline realistic photos, and a few low-quality images could be used to obtain the training data, which was primarily used in the classification of trash. A total of 16,830 images were present, including 699 images of batteries, 2,121 images of glass, 1,588 pictures of metal, 2,303 pictures of paper, 2,120 pictures of plastic, 7,475 pictures of organic materials, 211 pictures of e-waste, and 313 pictures of clothes. These categories were created based on the images in each separate folder.Almost 2,000 images of low quality, 11,957 images from online resources, and 2,873 images from realistic fields.
+\subsection{Data Analysis}
+Vgg19 is employed for single garbage image categorization. A total of 18784 trash photos were gathered. Using the obtained dataset, Vgg19 models were trained and, respectively, achieved 70\% and 85\% accuracy. According to our research, there are eight different types of waste: paper, metal, batteries, plastic, glass, clothing, organic waste, and e-waste. We concentrate on the recyclable waste classes in eight-class systems: paper, metal, glass, cardboard, plastic, and rubbish. The method was utilized to extract picture features from CNN, and a multilayered perceptron was used to consolidate just important image features. Online repositories, offline realistic photos, and a few low-quality images may be used to access the training data, which was mostly used in the classification of rubbish.
+\subsection{Models}
+To solve our classification problems, which are described in the following, we have mainly used some common models (VGG19, Vgg19, and ResNet-50) for the investigation.
+\subsubsection{VGG-16}
+To achieve greater accuracy, VGG-16 is trained to a deeper structure of 16 layers, including 13 convolutional layers and 3 fully connected layers. This deeper structure of 16 layers requires 138 million weights and 15.5G MACs to identify the 224×224 pixel picture.
+\subsubsection{VGG-19}
+To categorize the photos into 1000 object categories, VGG19 uses a convolutional neural network with 19 layers, 16 convolution layers, and 3 fully connected layers. The ImageNet database, which has one million photos in 1000 categories, is used to train the VGG19 algorithm. Because each convolutional layer uses numerous 3 3 filters, it is a highly well-liked technique for classifying images.
+
+\subsubsection{Proposed model}
+In order to improve the results of our study, we have modified the vgg19 model in this instance. We attempt to conduct maximum pooling between the layers to decrease image dimensionality by compressing spatial size and parameters in order to improve the VGG19 model. In order to avoid overfitting, we also attempt early stopping; once our model achieves its peak accuracy, it will stop searching for a higher accuracy after a predetermined number of epochs. In order to reduce processing time, we practice on fewer epochs. Additionally, we experiment with alternative activation functions like ReLU, which is more effective than sigmoid because it only stimulates specific neurons. Try dropout to avoid training on arbitrarily chosen neurons and reduce network computation. We also stay away from high-resolution images because increasing visual clarity doesn't really enhance learning (224 by 224 pixels is standard).\vspace{1mm}\\
+
+In order to avoid overfitting, we apply the pre-trained VGG19 model at a rate of 0.2 after using VGG19 as our basic model in the Dropout layer. To turn the output of the pre-trained VGG19 model into a 1D array, a Flatten layer is applied. After the Flatten layer, the Batch Normalization layer is applied to normalize the feature data.
+
+\section{Proposed Model}
+Fig.2 Represent the customized architecture of the VGG19 Model. The architecture of our modified VGG19 model, along with the performance-enhancing changes we made, like max pooling, dropout, and alternate activation functions, are displayed in this figure.
+
+\begin{figure}[htp]
+        \begin{center}
+        \includegraphics[height=7 cm,width=.5\textwidth, center]{model.png}
+        \end{center}
+        \caption{Customized VGG19 Model Architecture}
+        \label{fig: Customized VGG19 Model Architecture}
+        \end{figure}
+
+Here we will choose the best two models (VGG16 & VGG19) through training them. So, starting with the first stages, we import the libraries that are required. After that, we preprocess our model. Preprocessing involves setting the image size to 224 by 224 pixels as well as the model batch size. After that, we rescale the image, which entails dividing each array value by 255 because the image is derived from an array. Because of this, the value of each image will be reduced, allowing us to calculate our measurements more quickly and easily. Next, we'll add to our data and determine the ideal image size. Then, we will import our dataset's VGG16 and VGG19 models, along with any required libraries and images.
+\vspace{1mm}\\
+
+Fig.\ref{fig: Proposed Methodology} The architecture of the proposed approach for computer vision-based trash categorization is displayed in this picture, along with the methods and procedures used to arrive at the final classification.
+
+\begin{figure}[htp]
+        \begin{center}
+        \includegraphics[height=4 cm,width=.5\textwidth, center]{Screenshot_128.png}
+        \end{center}
+        \caption{Proposed Model of Computer Vision-based Wast Classification}
+        \label{fig: Proposed Methodology}
+        \end{figure}
+
+We will now categorize the objects in our dataset using the VGG16 or VGG19 existing weights. To do this, we first flatten the output from the VGG16 and VGG19 models, and then, using glob, we establish our own dataset route to categorize our categorical class. The folder or class will then be visible. In order to obtain the results, we now import the VGG16 output into our own dataset using a dense layer. We are able to see our class levels in this method.
+Thus, using this technique, we construct or compare our models to find the ones that perform the best and work the most effectively.
+\subsection{Model Training and Testing}
+Here, we specify the optimizer, matrices, assigned epochs, training accuracy, and loss accuracy for training our model. Therefore, we will evaluate the VGG16 and VGG19 models' performance on the same dataset using various epochs.\\
+
+Fig.\ref{fig: Number of training images and classes} The image below shows that, in order to train our model, we specify the optimizer, metrics, allocated epochs, training accuracy, and loss accuracy. We compare the VGG16 and VGG19 models' performances throughout different epochs using the same dataset.
+
+\begin{figure}[htp]
+        \begin{center}
+        \includegraphics[height=6.5 cm,width=.5\textwidth, center]{download (13).png}
+        \end{center}
+        \caption{Number of training images and classes}
+        \label{fig: Number of training images and classes}
+        \end{figure}
+\section{Result Analysis and Discussion}
+In this part, the outcomes of the proposed work are presented along with a comparison to earlier models. We used the selected features from the feature selection process to assess the proposed models because they marginally enhanced performance. Table I, II, III, and IV show the overall performance analysis of the proposed model.
+
+Equations for Accuracy and Loss:
+
+\[
+\text{Accuracy} = \frac{\text{Number of Correct Predictions}}{\text{Total Number of Predictions}}
+\]
+
+\[
+\text{Accuracy} = \frac{1}{N} \sum_{i=1}^{N} \mathbf{1}(y_i = \hat{y}_i)
+\]
+
+\[
+\text{Categorical Cross-Entropy Loss} = -\frac{1}{N} \sum_{i=1}^{N} \sum_{c=1}^{C} y_{i,c} \log(\hat{y}_{i,c})
+\]
+
+
+Table I: For the VGG19 model over ten epochs, Table I displays the loss, accuracy, validation accuracy, and validation loss. With a validation accuracy of 0.8123, a validation loss of 0.4048, and a training loss of 0.1957, the model indicated strong generalization to the validation set.
+
+
+
+% Please add the following required packages to your document preamble:
+% \usepackage{multirow}
+
+\begin{table}[htp]
+\begin{center}
+\caption{Loss, Accuracy and Validation loss, Validation Accuracy of VGG19}
+\begin{tabular}{|c|cccc|}
+\hline
+\multirow{}{}{Epoch} & \multicolumn{4}{c|}{VGG19}                                                                                   \\ \cline{2-5} 
+                       & \multicolumn{1}{c|}{Loss}   & \multicolumn{1}{c|}{Accuracy} & \multicolumn{1}{c|}{Val\_loss} & Val\_accuracy \\ \hline
+10                     & \multicolumn{1}{c|}{0.1957} & \multicolumn{1}{c|}{0.6885}   & \multicolumn{1}{c|}{0.4048}    & 0.8123        \\ \hline
+20                     & \multicolumn{1}{c|}{0.1868} & \multicolumn{1}{c|}{0.7052}   & \multicolumn{1}{c|}{0.3792}    & 0.8300        \\ \hline
+\end{tabular}
+\end{center}
+\label{VGG19 loss ,Accuracy and Val_loss, Val_accuracy}
+\end{table}
+
+\vspace{1mm}\\
+Table II: The accuracy and loss of VGG16 and VGG19 during several epochs are compared in Table II. After 10 epochs, it indicates that VGG19 beat VGG16 in terms of accuracy (0.6885) and loss (0.1957).
+
+\vspace{1mm}\\
+\begin{table}[htp]
+\begin{center}
+\caption{Compare Accuracy and loss of VGG16 and VGG19}
+\begin{tabular}{|c|cc|cc|}
+\hline
+\multirow{}{}{\textbf{ Epochs}} & \multicolumn{2}{c|}{\textbf{Accuracy}} & \multicolumn{2}{c|}{\textbf{Loss}} \\ \cline{2-5} 
+    & \multicolumn{1}{c|}{VGG16}  & VGG19  & \multicolumn{1}{c|}{VGG16}  & VGG19  \\ \hline
+10   & \multicolumn{1}{c|}{0.6305} & 0.6885  & \multicolumn{1}{c|}{0.2285} & 0.1957 \\ \hline
+20  & \multicolumn{1}{c|}{0.633} & 0.7052 & \multicolumn{1}{c|}{0.2235} & 0.1868 \\ \hline
+\end{tabular}
+\end{center}
+\label{Compare Accuracy and loss of VGG16 and VGG19}
+\end{table}
+
+
+So, after comparing several model types, we examine each model's effectiveness and performance. We discovered the VGG19 model from that investigation, which offers us the best accuracy and performance compared to others. Therefore, we are classifying our garbage using this method and our final model is VGG19.\\
+Below are images with their respective predictions from the model and show the detection object with their accuracy.
+
+% Please add the following required packages to your document preamble:
+% \usepackage{multirow}
+\begin{table}[htp]
+\begin{center}
+\caption{VGG19 and Proposed Improved  VGG19 Testing Compare Accuracy and loss}
+\begin{tabular}{|c|c|cc|}
+\hline
+\multirow{}{}{\textbf{Waste Name}} & \textbf{VGG19}    & \multicolumn{2}{c|}{\textbf{Customized VGG19}}                 \\ \cline{2-4} 
+                                    & \textbf{Accuracy} & \multicolumn{1}{c|}{\textbf{Testing Time}} & \textbf{Accuracy} \\ \hline
+Plastic                             & 92.37             & \multicolumn{1}{c|}{1s}                    & 99.81             \\ \hline
+Paper                               & 95.23             & \multicolumn{1}{c|}{20ms}                  & 96.73             \\ \hline
+Glass                               & 84.53             & \multicolumn{1}{c|}{20ms}                  & 90.5              \\ \hline
+Metal                               & 97.47             & \multicolumn{1}{c|}{1s}                    & 99.81             \\ \hline
+Batteries                           & 66.56             & \multicolumn{1}{c|}{1s}                    & 99.97             \\ \hline
+Organic                             & 96.29             & \multicolumn{1}{c|}{22ms}                  & 100               \\ \hline
+Clothes                             & 91.65             & \multicolumn{1}{c|}{24ms}                  & 99.94             \\ \hline
+E-waste                             & 75.1              & \multicolumn{1}{c|}{22ms}                  & 95.25             \\ \hline
+Average                             &  87.40             & \multicolumn{1}{c|}{}                  & 97.75             \\ \hline
+
+\end{tabular}
+\end{center}
+
+\label{VGG19 and Customized  VGG19 Testing Compare Accuracy and loss }
+\end{table}
+Table III: The table shows considerable improvements in accuracy across all waste categories with the customized VGG19 model when comparing the testing time and accuracy of the VGG19 model against our customized version.
+
+\subsection{Comparison Analysis}
+A comparison table is given here to show how the proposed model outperforms the current models. The precision of the suggested model is contrasted in Table IV.
+
+
+
+\begin{table*}[t] % Use table* for spanning both columns
+\centering
+\caption{Comparison of Accuracy and Loss of VGG16, VGG19, and Customized VGG19}
+\label{tab:compare-accuracy-loss}
+\begin{tabular}{|c|c|c|c|c|c|c|}
+\hline
+\multirow{}{}{\textbf{Epochs}} & \multicolumn{3}{c|}{\textbf{Accuracy}} & \multicolumn{3}{c|}{\textbf{Loss}} \\ \cline{2-7} 
+ & \textbf{VGG16} & \textbf{VGG19} & \textbf{Customized VGG19} & \textbf{VGG16} & \textbf{VGG19} & \textbf{Customized VGG19} \\ \hline
+10 & 0.6305 & 0.6885 & 0.9814 & 0.2285 & 0.1957 & 0.1014 \\ \hline
+20 & 0.6333 & 0.7052 & 0.9887 & 0.2235 & 0.1868 & 0.0781 \\ \hline
+\end{tabular}
+\label{Compare Accuracy and loss of VGG16,VGG19 and Customized   VGG19 }
+
+\end{table}
+
+
+
+Table IV: The accuracy and loss metrics of VGG16, VGG19, and a modified VGG19 model are compared over 10 and 20 epochs in Table IV. The customized VGG19 model performs much better in accuracy and loss reduction than the regular VGG16 and VGG19 models, as shown in the table.\\
+
+A crucial step in assessing the precision and efficacy of a computer vision-based trash classification and management system is to evaluate it. The performance of the system must be compared to a list of clearly defined criteria in order to be evaluated.\vspace{1mm}\\
+
+This phase includes developing and evaluating our finished model. Here, we examine and assess our dataset resources. Here We employ the subpar images we took.
+
+Here, we employ a filter to get rid of noise from high-resolution, low-quality images. We evaluate several filtering methods and compare them to get the best results. After that, we may draw the conclusion that a gaussian noise filter will help us turn a low-quality image into a high-quality one and that a salt and pepper noise filter will help us remove image noise.
+In this work, the Vgg19 model is used to predict particular object recognition from a picture. In this stage, the developed model is evaluated using the test dataset. The framework processes the test dataset using the training dataset. We can more accurately identify various waste photos by using model testing.
+After completing all the steps, we finally settle on the VGG19 model to produce the best results possible from our own dataset.
+
+\section{Conclusion}
+This research introduced an automated waste detection technique combining deep learning and image processing techniques to reduce the effect caused by improper trash disposal. As a result, the technique was implemented using a sizable image collection, training datasets, and object identification and classification predicted patterns. In this study, we have shown how the approach may be used to classify waste materials into 8 categories (Clothes, Metal, Glass, Paper, Plastic, E-waste, Organic, Batteries) on several objects in a single image.\vspace{1mm}\\
+The network in use is based on the VGG16 and VGG19 pre-trained models. Using various network parameters and data upgrades, we tested two models on the rubbish image dataset.\vspace{13mm}\\\vspace{13mm}\\\vspace{13mm}\\ We provided the optimum classification prediction parameters in the research, which enhanced system performance. An suitable network model can increase the effectiveness of the classification task more effectively when taking into account the time cost and performance improvement. We hope and expect that the data gathered in this study will serve as some kind of inspiration for other visual recognition issues of a same nature. 
+We intend to employ the most recent advancements in convolutional neural network research in the future to attempt to categorize various types of garbage in more complicated backgrounds and to realize the separation of distinct garbages in a single image, which will be a difficult task.A sizable and expanding garbage dataset must be created in order to accomplish this objective. The model's classification performance should be significantly improved in future study. In addition to the hardware system required to achieve intelligent and real-time waste classification, more studies should focus on ensuring classification accuracy.
+
+\section*{Acknowledgments}
+This work was supported in part by the Center for Research, Innovation, and Transformation (CRIT) of Green University of Bangladesh (GUB). \vspace{5mm}
+
+\begin{thebibliography}{00}
+\bibitem{b1}Adedeji Olugboja and Zenghui Wang. Intelligent waste classification system using
+deep learning convolutional neural network. Procedia Manufacturing, 35:607–
+612, 01 2019.
+\bibitem{b2}Janusz Bobulski and Mariusz Kubanek. The triple histogram method for waste
+classification. volume 2293, page 420004, 11 2020.
+\bibitem{b3} Baiqiang Gan and Chi Zhang. Research on the algorithm of urban waste clas-
+sification and recycling based on deep learning technology. pages 232–236, 07
+2020.
+\bibitem{b4} Xiujie Xu, Xuehai Qi, and Xingjian Diao. Reach on waste classification and
+identification by transfer learning and lightweight neural network. 02 2020.
+\bibitem{b5} Jo ̃ao Sousa, Ana Rebelo, and Jaime Cardoso. Automation of waste sorting with
+deep learning. pages 43–48, 09 2019.
+\bibitem{b6} Haochen Cai, Xinli Cao, Likun Huang, Lianying Zou, and Shubin Yang. Re-
+search on computer vision-based waste sorting system. In 2020 5th International
+Conference on Control, Robotics and Cybernetics (CRC), pages 117–122, 2020.
+\bibitem{b7} David Lowe. Distinctive image features from scale-invariant keypoints. Interna-
+tional Journal of Computer Vision, 60:91–, 11 2004.
+\bibitem{b8} ] Krizhevsky, A.; Sutskever, I.; Hinton, G.E. “Imagenet classification with deep convolutional neural networks”. Communications of the ACM 2017, 60, 84–90.
+\bibitem{b9}Yang, M.; Thung, G. “Classification of trash for recyclability status”. CS229 Project Report 2016, 2016.
+\bibitem{b10}] Sakr, G.E.; Mokbel, M.; Darwich, A.; Khneisser, M.N.; Hadi, A. “Comparing deep learning and support vector machines for autonomous waste sorting”. 2016 IEEE International Multidisciplinary Conference on Engineering Technology (IMCET). IEEE, 2016, pp. 207–212.
+\bibitem{b11}Yang, M.; Thung, G. “Classification of trash for recyclability status”. CS229 Project Report 2016, 2016.
+\bibitem{b12}Yue Yu. A computer vision based detection system for trash bins identi-
+fication during trash classification. Journal of Physics: Conference Series,
+1617(1):012015, aug 2020.
+\bibitem{b13}Ninad Mehendale, Maria Mokbel, Vrushali Sule, Chaitanya Tamhankar, Saloni
+Kaveri, and Nilesh Lakade. Computer vision based medical waste separator. 2021
+Social Science Research Network (SSRN)), page 9, 6 2021.
+\bibitem{b14}Arebey, M.; Hannan, M.; Begum, R.; Basri, H. Solid waste bin level detection using gray level co-occurrence matrix feature extraction approach. Journal of environmental management 2012, 104, 9–18.
+\bibitem{b15}Bircanog˘lu, C.; Atay, M.; Bes¸er, F.; Genç, Ö; Kızrak, M.A. Recyclenet: Intelligent waste sorting using deep neural networks. 2018 Innovations in Intelligent Systems and Applications (INISTA). IEEE, 2018, pp. 1–7.
+\end{thebibliography}
+\vspace{12pt}
+
+\end{document}
